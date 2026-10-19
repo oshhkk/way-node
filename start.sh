@@ -47,8 +47,9 @@ fi
 
 # ---- 网页终端 ----
 # -W 允许输入；-P 30 每 30 秒发一次心跳，避免 Railway 60 秒空闲断开
+# -t rendererType=dom：不用 WebGL 渲染，避免部分浏览器显示成条纹乱码；fontSize 固定字号
 # -d 0 关闭 ttyd 自身的日志：它默认会把账号密码的 base64 编码打印到日志里
-ttyd -p "${PORT}" -d 0 -W -P 30 -c "${TERMINAL_USER}:${TERMINAL_PASSWORD}" \
+ttyd -p "${PORT}" -d 0 -W -P 30 -t rendererType=dom -t fontSize=16 -c "${TERMINAL_USER}:${TERMINAL_PASSWORD}" \
   tmux new-session -A -s main &
 PIDS+=($!)
 log "网页终端已启动，监听 ${PORT}"
